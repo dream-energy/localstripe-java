@@ -42,12 +42,14 @@ class PaymentIntentControllerTest {
 		Assertions.assertThat(paymentIntent.getId()).isNotNull();
 		Assertions.assertThat(paymentIntent.getClientSecret()).isNotNull();
 		Assertions.assertThat(paymentIntent.getAutomaticPaymentMethods()).isNull();
+		Assertions.assertThat(paymentIntent.getStatus()).isEqualTo("requires_payment_method");
 		String paymentIntentId = paymentIntent.getId();
 		
 		paymentIntent = PaymentIntent.retrieve(paymentIntentId);
 		Assertions.assertThat(paymentIntent.getAmount()).isEqualTo(1000L);
 		Assertions.assertThat(paymentIntent.getCurrency()).isEqualTo("eur");
-		Assertions.assertThat(paymentIntent.getId()).isEqualTo(paymentIntentId);		
+		Assertions.assertThat(paymentIntent.getId()).isEqualTo(paymentIntentId);
+		Assertions.assertThat(paymentIntent.getStatus()).isEqualTo("requires_payment_method");
 	}
 	
 	@Test // Not compatible with localstripe Python
@@ -67,12 +69,14 @@ class PaymentIntentControllerTest {
 		Assertions.assertThat(paymentIntent.getClientSecret()).isNotNull();
 		Assertions.assertThat(paymentIntent.getAutomaticPaymentMethods()).isNotNull();
 		Assertions.assertThat(paymentIntent.getAutomaticPaymentMethods().getEnabled()).isTrue();
+		Assertions.assertThat(paymentIntent.getStatus()).isEqualTo("requires_payment_method");
 		String paymentIntentId = paymentIntent.getId();
 		
 		paymentIntent = PaymentIntent.retrieve(paymentIntentId);
 		Assertions.assertThat(paymentIntent.getAmount()).isEqualTo(1000L);
 		Assertions.assertThat(paymentIntent.getCurrency()).isEqualTo("eur");
-		Assertions.assertThat(paymentIntent.getId()).isEqualTo(paymentIntentId);		
+		Assertions.assertThat(paymentIntent.getId()).isEqualTo(paymentIntentId);
+		Assertions.assertThat(paymentIntent.getStatus()).isEqualTo("requires_payment_method");
 	}	
 
 }

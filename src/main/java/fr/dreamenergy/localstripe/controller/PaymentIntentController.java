@@ -46,6 +46,7 @@ public class PaymentIntentController {
 			paymentIntent.setAutomaticPaymentMethods(automaticPaymentMethodsPaymentIntent);
 		}		
 		paymentIntent.setClientSecret(paymentIntent.getId() + "_secret_" + RandomStringUtils.random(16, true, true));
+		paymentIntent.setStatus("requires_payment_method");
 		paymentIntentRepository.save(paymentIntent);
 		LOG.info("PaymentIntent with id [{}] has been created.", paymentIntent.getId());
 		return paymentIntent;
