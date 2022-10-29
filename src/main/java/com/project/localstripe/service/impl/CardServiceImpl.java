@@ -1,73 +1,102 @@
 package com.project.localstripe.service.impl;
 
+import com.google.gson.Gson;
 import com.project.localstripe.common.Constants;
 import com.project.localstripe.request.CreateCardDTO;
 import com.project.localstripe.service.CardService;
-import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
-import com.stripe.model.Card;
-import com.stripe.model.Customer;
-import com.stripe.model.Source;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
+import org.springframework.web.server.ResponseStatusException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Service
 public class CardServiceImpl implements CardService {
 
-    @Value("${stripe.api.key}")
-    private String API_KEY;
     @Override
-    public Card createCard(String id, CreateCardDTO createCardDTO) throws StripeException {
-        Stripe.apiKey = API_KEY;
-        Map<String, Object> retrieveParams =
-                new HashMap<>();
-        List<String> expandList = new ArrayList<>();
-        expandList.add(Constants.SOURCES);
-        retrieveParams.put("expand", expandList);
-        Customer customer =
-                Customer.retrieve(
-                        id,
-                        retrieveParams,
-                        null
-                );
+    public String createCard(String id, CreateCardDTO createCardDTO){
 
         Map<String, Object> params = new HashMap<>();
-        params.put("source", createCardDTO.getSource());
+        if(!(id.contains("cus_"))){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.INVALID_CUSTOMER_ID);
+        }
+        params.put("id", "card_1LxaFv2eZvKYlo2CHDtF6Isx");
+        params.put("object", "card");
+        params.put("address_city", "null");
+        params.put("address_country", "null");
+        params.put("address_line1", "null");
+        params.put("address_line1_check", "null");
+        params.put("address_line2", "null");
+        params.put("address_state", "null");
+        params.put("address_zip", "null");
+        params.put("address_zip_check", "null");
+        params.put("brand", "Visa");
+        params.put("country", "US");
+        params.put("customer", id);
+        params.put("cvc_check", "pass");
+        params.put("dynamic_last4", "null");
+        params.put("exp_month", 8);
+        params.put("exp_year", 2023);
+        params.put("fingerprint", "Xt5EWLLDS7FJjR1c");
+        params.put("funding", "credit");
+        params.put("last4", "4242");
+        params.put("metadata", "{}");
+        params.put("name", "null");
+        params.put("redaction", "null");
+        params.put("tokenization_method", "null");
 
-        Card card =
-                (Card) customer.getSources().create(params);
-        return card;
+        Gson gson = new Gson();
+        String json = gson.toJson(params);
+
+        return json;
+
     }
 
     @Override
-    public Card getCard(String id, String cardId) throws StripeException {
-        Stripe.apiKey = API_KEY;
+    public String getCard(String id, String cardId){
 
-        Map<String, Object> retrieveParams =
-                new HashMap<>();
-        List<String> expandList = new ArrayList<>();
-        expandList.add(Constants.SOURCES);
-        retrieveParams.put("expand", expandList);
-        Customer customer =
-                Customer.retrieve(
-                        id,
-                        retrieveParams,
-                        null
-                );
+        Map<String, Object> params = new HashMap<>();
+        if(!(id.contains("cus_"))){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.INVALID_CUSTOMER_ID);
+        }
 
-        Card card =
-                (Card) customer.getSources().retrieve(
-                        cardId
-                );
+        if(!(cardId.contains("card_"))){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.INVALID_CARD_ID);
+        }
 
-        return card;
+        params.put("id", cardId);
+        params.put("object", "card");
+        params.put("address_city", "null");
+        params.put("address_country", "null");
+        params.put("address_line1", "null");
+        params.put("address_line1_check", "null");
+        params.put("address_line2", "null");
+        params.put("address_state", "null");
+        params.put("address_zip", "null");
+        params.put("address_zip_check", "null");
+        params.put("brand", "Visa");
+        params.put("country", "US");
+        params.put("customer", id);
+        params.put("cvc_check", "pass");
+        params.put("dynamic_last4", "null");
+        params.put("exp_month", 5);
+        params.put("exp_year", 2025);
+        params.put("fingerprint", "Xt5EWLLDS7FJjR1c");
+        params.put("funding", "credit");
+        params.put("last4", "5050");
+        params.put("metadata", "{}");
+        params.put("name", "null");
+        params.put("redaction", "null");
+        params.put("tokenization_method", "null");
+
+        Gson gson = new Gson();
+        String json = gson.toJson(params);
+
+        return json;
+
+
     }
 }

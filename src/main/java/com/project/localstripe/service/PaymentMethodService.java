@@ -1,15 +1,13 @@
 package com.project.localstripe.service;
 
 import com.project.localstripe.request.CreatePaymentDTO;
-import com.stripe.exception.StripeException;
-import com.stripe.model.PaymentMethod;
 
 public interface PaymentMethodService {
 
-    public PaymentMethod paymentMethodAttach(String id, String customerId) throws StripeException;
+    public String paymentMethodAttach(String id, String customerId);
 
-    public PaymentMethod paymentMethodDetach(String id) throws StripeException;
+    public String paymentMethodDetach(String id);
 
-    public PaymentMethod createPaymentMethod(CreatePaymentDTO createPaymentDTO) throws StripeException;
+    public String createPaymentMethod(CreatePaymentDTO createPaymentDTO);
 
 }

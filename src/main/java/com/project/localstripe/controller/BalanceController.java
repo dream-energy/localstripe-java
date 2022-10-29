@@ -1,8 +1,6 @@
 package com.project.localstripe.controller;
 
 import com.project.localstripe.service.BalanceService;
-import com.stripe.exception.StripeException;
-import com.stripe.model.Balance;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +13,10 @@ public class BalanceController {
     BalanceService balanceService;
 
     @GetMapping
-    public Balance balance() throws StripeException {
+    public String balance(){
         log.info(":: Inside Balance Controller ::");
-        return Balance.retrieve();
+        String response = balanceService.getBalance();
+        return response;
     }
 
 }

@@ -5,9 +5,6 @@ import com.project.localstripe.request.UpdateCustomerDTO;
 import com.project.localstripe.service.CustomerService;
 import com.project.localstripe.service.impl.CustomerServiceImpl;
 import com.stripe.exception.StripeException;
-import com.stripe.model.Customer;
-import com.stripe.model.CustomerCollection;
-import com.stripe.model.CustomerSearchResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,39 +24,39 @@ this.customerServiceImpl = customerServiceImpl;
     CustomerService customerService;
 
     @PostMapping("/")
-    public Customer createCustomer(@RequestBody CreateCustomerDTO createCustomerDTO) throws StripeException {
-        Customer response = customerService.CreateCustomer(createCustomerDTO);
+    public String createCustomer(@RequestBody CreateCustomerDTO createCustomerDTO){
+        String response = customerService.CreateCustomer(createCustomerDTO);
         return response;
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomer(@PathVariable("id") String id) throws StripeException {
-        Customer response = customerService.getCustomers(id);
+    public String getCustomer(@PathVariable("id") String id){
+        String response = customerService.getCustomers(id);
         return response;
     }
 
     @PostMapping("/{id}")
-    public Customer updateCustomer(@PathVariable("id") String id, @RequestBody UpdateCustomerDTO request) throws StripeException {
-        Customer response = customerService.updateCustomer(id, request);
+    public String updateCustomer(@PathVariable("id") String id, @RequestBody UpdateCustomerDTO request){
+        String response = customerService.updateCustomer(id, request);
         return response;
     }
 
     @DeleteMapping("/{id}")
-    public Customer deleteCustomer(@PathVariable("id") String id) throws StripeException {
-        Customer response = customerService.deleteCustomer(id);
+    public String deleteCustomer(@PathVariable("id") String id){
+        String response = customerService.deleteCustomer(id);
         return response;
     }
 
     @GetMapping("/")
-    public CustomerCollection getAllCustomers(@RequestParam("limit") Integer limit) throws StripeException {
-        CustomerCollection response = customerService.getAllCustomers(limit);
+    public String getAllCustomers(){
+        String response = customerService.getAllCustomers();
         return response;
     }
 
 
     @GetMapping("/search")
-    public CustomerSearchResult searchCustomers() throws StripeException {
-        CustomerSearchResult response = customerService.searchCustomers();
+    public String searchCustomers(@RequestParam("query") String query) throws StripeException {
+        String response = customerService.searchCustomers(query);
         return response;
     }
 

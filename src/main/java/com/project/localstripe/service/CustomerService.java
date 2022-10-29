@@ -2,23 +2,18 @@ package com.project.localstripe.service;
 
 import com.project.localstripe.request.CreateCustomerDTO;
 import com.project.localstripe.request.UpdateCustomerDTO;
-import com.stripe.exception.StripeException;
-import com.stripe.model.Customer;
-import com.stripe.model.CustomerCollection;
-import com.stripe.model.CustomerSearchResult;
-import com.stripe.param.CustomerSearchParams;
 
 public interface CustomerService {
-    public Customer CreateCustomer(CreateCustomerDTO customerRequestDTO) throws StripeException;
+    public String CreateCustomer(CreateCustomerDTO customerRequestDTO);
 
 
-    public Customer getCustomers(String id) throws StripeException;
+    public String getCustomers(String id);
 
-    public Customer updateCustomer(String id, UpdateCustomerDTO updateCustomerDTO) throws StripeException;
+    public String updateCustomer(String id, UpdateCustomerDTO updateCustomerDTO);
 
-    public Customer deleteCustomer(String id) throws StripeException;
+    public String deleteCustomer(String id);
 
-    public CustomerCollection getAllCustomers(Integer limit) throws StripeException;
+    public String getAllCustomers();
 
-    public CustomerSearchResult searchCustomers() throws StripeException;
+    public String searchCustomers(String query);
 }

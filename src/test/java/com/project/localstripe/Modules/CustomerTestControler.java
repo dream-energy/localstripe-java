@@ -3,10 +3,7 @@ package com.project.localstripe.Modules;
 
 import com.project.localstripe.controller.CustomerController;
 import com.project.localstripe.request.CreateCustomerDTO;
-import com.project.localstripe.request.CustomerRequestDTO;
 import com.project.localstripe.service.impl.CustomerServiceImpl;
-import com.stripe.exception.StripeException;
-import com.stripe.model.Customer;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,18 +31,18 @@ public class CustomerTestControler {
 
 
     @Test
-    public void successScenario() throws StripeException {
-        Customer customer = customerController.createCustomer(CUSTOMER_REQUEST);
+    public void successScenario(){
+        String customer = customerController.createCustomer(CUSTOMER_REQUEST);
         System.out.println("success"+customer);
     }
 
 
     @Test
-    public void successScenarioWithNullDescription() throws StripeException {
+    public void successScenarioWithNullDescription(){
 
         CUSTOMER_REQUEST.setDescription(null);
 
-        Customer customer = customerController.createCustomer(CUSTOMER_REQUEST);
+        String customer = customerController.createCustomer(CUSTOMER_REQUEST);
         System.out.println("success with Description Null"+customer);
     }
 

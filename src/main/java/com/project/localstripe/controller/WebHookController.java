@@ -1,10 +1,7 @@
 package com.project.localstripe.controller;
 
-
 import com.project.localstripe.request.WebHookRequestDTO;
 import com.project.localstripe.service.WebHookService;
-import com.stripe.exception.StripeException;
-import com.stripe.model.WebhookEndpoint;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,23 +14,23 @@ public class WebHookController {
     WebHookService webHookService;
 
     @PostMapping
-    public WebhookEndpoint createWebHook(@RequestBody WebHookRequestDTO requestDTO) throws StripeException {
+    public String createWebHook(@RequestBody WebHookRequestDTO requestDTO){
         log.info(":: create-webhook Method ::");
-        WebhookEndpoint response = webHookService.createWebHook(requestDTO);
+        String response = webHookService.createWebHook(requestDTO);
         return response;
     }
 
     @GetMapping("/{id}")
-    public WebhookEndpoint getWebHook(@PathVariable("id") String id) throws StripeException {
+    public String getWebHook(@PathVariable("id") String id){
         log.info(":: get-webhook Method ::");
-        WebhookEndpoint response = webHookService.getWebHook(id);
+        String response = webHookService.getWebHook(id);
         return response;
     }
 
     @PostMapping("/{id}")
-    public WebhookEndpoint updateWebHook(@PathVariable("id") String id,@RequestBody WebHookRequestDTO requestDTO) throws StripeException {
+    public String updateWebHook(@PathVariable("id") String id,@RequestBody WebHookRequestDTO requestDTO){
         log.info(":: update-webhook Method ::");
-        WebhookEndpoint response = webHookService.updateWebHook(id, requestDTO);
+        String response = webHookService.updateWebHook(id, requestDTO);
         return response;
     }
 

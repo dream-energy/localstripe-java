@@ -5,9 +5,6 @@ import com.project.localstripe.request.CreatePaymentIntentDTO;
 import com.project.localstripe.request.PaymentIntentRequestDTO;
 import com.project.localstripe.request.UpdatePaymentIntentDTO;
 import com.project.localstripe.service.PaymentIntentService;
-import com.stripe.exception.StripeException;
-import com.stripe.model.PaymentIntent;
-import com.stripe.model.PaymentIntentCollection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -59,55 +56,55 @@ public class PaymentIntentController {
 //
 
     @PostMapping("/")
-    public PaymentIntent createPaymentIntent(@RequestBody CreatePaymentIntentDTO request) throws StripeException {
-        PaymentIntent response = paymentIntentService.createPaymentIntent(request);
+    public String createPaymentIntent(@RequestBody CreatePaymentIntentDTO request){
+        String response = paymentIntentService.createPaymentIntent(request);
         return response;
     }
 
 
     @GetMapping("/{id}")
-    public PaymentIntent getPaymentIntent(@PathVariable("id") String id) throws StripeException {
-        PaymentIntent response = paymentIntentService.getPaymentIntent(id);
+    public String getPaymentIntent(@PathVariable("id") String id){
+        String response = paymentIntentService.getPaymentIntent(id);
         return response;
     }
 
     @PostMapping("/{id}")
-    public PaymentIntent updatePaymentIntent(@PathVariable("id") String id, @RequestBody UpdatePaymentIntentDTO updatePaymentIntentDTO) throws StripeException {
-        PaymentIntent response = paymentIntentService.updatePaymentIntent(id, updatePaymentIntentDTO);
+    public String updatePaymentIntent(@PathVariable("id") String id, @RequestBody UpdatePaymentIntentDTO updatePaymentIntentDTO){
+        String response = paymentIntentService.updatePaymentIntent(id, updatePaymentIntentDTO);
         return response;
     }
 
 
     @PostMapping("/{id}/confirm")
-    public PaymentIntent confirmPaymentIntent(@PathVariable("id") String id,@RequestBody PaymentIntentRequestDTO requestDTO) throws StripeException {
+    public String confirmPaymentIntent(@PathVariable("id") String id,@RequestBody PaymentIntentRequestDTO requestDTO){
         log.info("::: confirm-payment-intent method :::");
-        PaymentIntent response = paymentIntentService.confirmPaymentIntent(id, requestDTO);
+        String response = paymentIntentService.confirmPaymentIntent(id, requestDTO);
         return response;
     }
 
     @PostMapping("/{id}/cancel")
-    public PaymentIntent cancelPaymentIntent(@PathVariable("id") String id) throws StripeException {
+    public String cancelPaymentIntent(@PathVariable("id") String id){
         log.info("::: cancel-payment-intent method :::");
-        PaymentIntent response = paymentIntentService.cancelPaymentIntent(id);
+        String response = paymentIntentService.cancelPaymentIntent(id);
         return response;
     }
 
     @PostMapping("/{id}/_authenticate")
-    public PaymentIntent isAuthorized(@PathVariable("id") String id, @RequestParam(name = "amount") Integer amount) throws StripeException {
+    public String isAuthorized(@PathVariable("id") String id, @RequestParam(name = "amount") Integer amount){
         log.info("::: authorize-payment-intent method :::");
-        PaymentIntent response = paymentIntentService.isAuthorized(id,amount);
+        String response = paymentIntentService.isAuthorized(id,amount);
         return response;
     }
 
     @PostMapping("/{id}/capture")
-    public PaymentIntent capturePaymentIntent(@PathVariable("id") String id) throws StripeException {
-        PaymentIntent response = paymentIntentService.capturePaymentIntent(id);
+    public String capturePaymentIntent(@PathVariable("id") String id){
+        String response = paymentIntentService.capturePaymentIntent(id);
         return response;
     }
 
     @GetMapping("/")
-    public PaymentIntentCollection getAllPaymentIntents(@RequestParam("limit")Integer limit) throws StripeException {
-        PaymentIntentCollection response = paymentIntentService.getAllPaymentIntents(limit);
+    public String getAllPaymentIntents(){
+        String response = paymentIntentService.getAllPaymentIntents();
         return response;
     }
 

@@ -1,14 +1,12 @@
 package com.project.localstripe.service;
 
 import com.project.localstripe.request.WebHookRequestDTO;
-import com.stripe.exception.StripeException;
-import com.stripe.model.WebhookEndpoint;
 
 public interface WebHookService {
-    public WebhookEndpoint createWebHook(WebHookRequestDTO requestDTO) throws StripeException;
-    public WebhookEndpoint getWebHook(String id) throws StripeException;
+    public String createWebHook(WebHookRequestDTO requestDTO);
+    public String getWebHook(String id);
 
-    public WebhookEndpoint updateWebHook(String id, WebHookRequestDTO requestDTO) throws StripeException;
+    public String updateWebHook(String id, WebHookRequestDTO requestDTO);
 
 
 

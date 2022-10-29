@@ -3,63 +3,189 @@ package com.project.localstripe.service.impl;
 import com.project.localstripe.common.Constants;
 import com.project.localstripe.request.CreatePaymentDTO;
 import com.project.localstripe.service.PaymentMethodService;
-import com.stripe.Stripe;
-import com.stripe.exception.StripeException;
-import com.stripe.model.PaymentMethod;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
 @Service
 public class PaymentMethodServiceImpl implements PaymentMethodService {
 
-    @Value("${stripe.api.key}")
-    private String API_KEY;
-
     @Override
-    public PaymentMethod paymentMethodAttach(String id, String customerId) throws StripeException {
-        Stripe.apiKey = API_KEY;
+    public String paymentMethodAttach(String id, String customerId){
+
         if(!(id.contains("pm_")) && !(customerId.contains("cus_"))){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.INVALID_PAYMENT_METHOD);
         }
 
-        PaymentMethod paymentMethod = PaymentMethod.retrieve(id);
-        Map<String, Object> params = new HashMap<>();
-        params.put("customer", customerId);
-        PaymentMethod updatedPaymentMethod = paymentMethod.attach(params);
-        return updatedPaymentMethod;
+        String response = """
+                {
+                  "id": "pm_1Lw6Db2eZvKYlo2CsbAYSXpj",
+                  "object": "payment_method",
+                  "billing_details": {
+                    "address": {
+                      "city": null,
+                      "country": null,
+                      "line1": null,
+                      "line2": null,
+                      "postal_code": null,
+                      "state": null
+                    },
+                    "email": null,
+                    "name": null,
+                    "phone": null
+                  },
+                  "card": {
+                    "brand": "visa",
+                    "checks": {
+                      "address_line1_check": null,
+                      "address_postal_code_check": null,
+                      "cvc_check": "unchecked"
+                    },
+                    "country": "US",
+                    "exp_month": 8,
+                    "exp_year": 2023,
+                    "fingerprint": "Xt5EWLLDS7FJjR1c",
+                    "funding": "credit",
+                    "generated_from": null,
+                    "last4": "4242",
+                    "networks": {
+                      "available": [
+                        "visa"
+                      ],
+                      "preferred": null
+                    },
+                    "three_d_secure_usage": {
+                      "supported": true
+                    },
+                    "wallet": null
+                  },
+                  "created": 1666539368,
+                  "customer": "%s",
+                  "livemode": false,
+                  "metadata": {},
+                  "redaction": null,
+                  "type": "card"
+                }
+                """.formatted(customerId);
+
+        return response;
     }
 
     @Override
-    public PaymentMethod paymentMethodDetach(String id) throws StripeException {
-        Stripe.apiKey = API_KEY;
+    public String paymentMethodDetach(String id){
+
         if(!(id.contains("pm_"))){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.INVALID_PAYMENT_METHOD);
         }
-        PaymentMethod paymentMethod = PaymentMethod.retrieve(id);
-        PaymentMethod updatedPaymentMethod = paymentMethod.detach();
-        return updatedPaymentMethod;
+
+        String response = """
+                {
+                  "id": "pm_1Lw6Db2eZvKYlo2CsbAYSXpj",
+                  "object": "payment_method",
+                  "billing_details": {
+                    "address": {
+                      "city": null,
+                      "country": null,
+                      "line1": null,
+                      "line2": null,
+                      "postal_code": null,
+                      "state": null
+                    },
+                    "email": null,
+                    "name": null,
+                    "phone": null
+                  },
+                  "card": {
+                    "brand": "visa",
+                    "checks": {
+                      "address_line1_check": null,
+                      "address_postal_code_check": null,
+                      "cvc_check": "unchecked"
+                    },
+                    "country": "US",
+                    "exp_month": 8,
+                    "exp_year": 2023,
+                    "fingerprint": "Xt5EWLLDS7FJjR1c",
+                    "funding": "credit",
+                    "generated_from": null,
+                    "last4": "4242",
+                    "networks": {
+                      "available": [
+                        "visa"
+                      ],
+                      "preferred": null
+                    },
+                    "three_d_secure_usage": {
+                      "supported": true
+                    },
+                    "wallet": null
+                  },
+                  "created": 1666539368,
+                  "customer": null,
+                  "livemode": false,
+                  "metadata": {},
+                  "redaction": null,
+                  "type": "card"
+                }
+                """;
+
+        return response;
     }
 
     @Override
-    public PaymentMethod createPaymentMethod(CreatePaymentDTO createPaymentDTO) throws StripeException {
-        Stripe.apiKey = API_KEY;
-        Map<String, Object> card = new HashMap<>();
-        card.put("number", createPaymentDTO.getNumber());
-        card.put("exp_month", createPaymentDTO.getExpMonth());
-        card.put("exp_year", createPaymentDTO.getExpYear());
-        card.put("cvc", createPaymentDTO.getCvc());
-        Map<String, Object> params = new HashMap<>();
-        params.put("type", createPaymentDTO.getType());
-        params.put("card", card);
+    public String createPaymentMethod(CreatePaymentDTO createPaymentDTO){
 
-        PaymentMethod paymentMethod =
-                PaymentMethod.create(params);
-        return paymentMethod;
+        String response = """
+                {
+                  "id": "pm_1Lw6Db2eZvKYlo2CsbAYSXpj",
+                  "object": "payment_method",
+                  "billing_details": {
+                    "address": {
+                      "city": null,
+                      "country": null,
+                      "line1": null,
+                      "line2": null,
+                      "postal_code": null,
+                      "state": null
+                    },
+                    "email": null,
+                    "name": null,
+                    "phone": null
+                  },
+                  "card": {
+                    "brand": "visa",
+                    "checks": {
+                      "address_line1_check": null,
+                      "address_postal_code_check": null,
+                      "cvc_check": "unchecked"
+                    },
+                    "country": "US",
+                    "exp_month": %s,
+                    "exp_year": %s,
+                    "fingerprint": "Xt5EWLLDS7FJjR1c",
+                    "funding": "credit",
+                    "generated_from": null,
+                    "last4": "4242",
+                    "networks": {
+                      "available": [
+                        "visa"
+                      ],
+                      "preferred": null
+                    },
+                    "three_d_secure_usage": {
+                      "supported": true
+                    },
+                    "wallet": null
+                  },
+                  "created": 1666539368,
+                  "customer": null,
+                  "livemode": false,
+                  "metadata": {},
+                  "redaction": null,
+                  "type": "%s"
+                }
+                """.formatted(createPaymentDTO.getExpMonth(), createPaymentDTO.getExpYear(),createPaymentDTO.getType());
+
+        return response;
     }
 }

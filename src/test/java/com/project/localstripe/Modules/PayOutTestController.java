@@ -3,7 +3,6 @@ package com.project.localstripe.Modules;
 import com.project.localstripe.controller.PayOutController;
 import com.project.localstripe.service.impl.PayOutServiceImpl;
 import com.stripe.exception.StripeException;
-import com.stripe.model.Payout;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,16 +31,16 @@ public class PayOutTestController {
 
 
     @Test
-    public void successScenario() throws StripeException {
-        Payout payout= payOutController.payout(ID);
+    public void successScenario(){
+        String payout= payOutController.payout(ID);
         System.out.println("success"+payout);
     }
 
 
     @Test
-    public void ScenarioWithNullId() throws StripeException {
+    public void ScenarioWithNullId(){
 
-        Payout payout = payOutController.payout(ID);
+        String payout = payOutController.payout(ID);
         System.out.println("success with ID Null"+payout);
     }
 
